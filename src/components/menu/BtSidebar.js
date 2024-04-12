@@ -1,26 +1,45 @@
-import React from 'react';
-import { University, School, UserCog, GraduationCap, LogOut } from 'lucide-react';
+import React, { useState } from 'react';
+import { Building2, Library, UserRoundCog, LogOut } from 'lucide-react';
 
-function BtSidebar(props) {
+function BtSidebar({ isActive, onClick, name }) {
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
   function renderIcon(name) {
     switch (name) {
-      case 'Institución':
-        return <University size={32} strokeWidth={1.25} />;
-      case 'Facultad':
-        return <School size={32} strokeWidth={1.25} />;
-      case 'Especialidad':
-        return <GraduationCap size={32} strokeWidth={1.25} />;
-      case 'Usuarios y Roles':
-        return <UserCog size={32} strokeWidth={1.25} />;
+      case 'Datos Institución':
+        return <Building2 size={32} strokeWidth={1.25} />;
+      case 'Facultades y Programas':
+        return <Library size={32} strokeWidth={1.25} />;
+      case 'Gestión Coordinadores':
+        return <UserRoundCog size={32} strokeWidth={1.25} />;
+      case 'Gestión Alumnos':
+        return <UserRoundCog size={32} strokeWidth={1.25} />;
       default:
         return <LogOut size={32} strokeWidth={1.25} />;
     }
   }
 
   return (
-    <div className='hover:bg-[#2E3A66] transition-colors flex flex-row mx-10 text-white p-4 items-center rounded'>
-      {renderIcon(props.name)}
-      <p className='mx-4 text-xl'>{props.name}</p>
+    <div
+      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={
+        `clickableDiv ${isActive ? 'active' : ''} flex flex-row items-center p-4 transition
+        ${isActive ? 'text-[#00C1BC]' : isHovering ? 'bg-[#2E3A66] text-white' : 'text-white'}
+        ${isActive ? 'border-l-2 border-[#00C1BC]' : 'border-l-2 border-transparent cursor-pointer'}`
+      }
+    >
+      {renderIcon(name)}
+      <p className='mx-4 text-[18px] font-[poppins]'>{name}</p>
     </div>
   );
 }

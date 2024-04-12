@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BtSidebar from '../BtSidebar';
+import User from '../User/User';
 
 function MenuAdmin() {
+  const [activeDiv, setActiveDiv] = useState(null);
+  const button = ['Datos Institución', 'Facultades y Programas', 'Gestión Coordinadores', 'Gestión Alumnos'];
+
   return (
-    <div className='bg-[#39487F] h-screen w-1/5 fixed flex flex-col justify-between'>
+    <div className='bg-[#39487F] h-screen w-[20%] fixed flex flex-col justify-between'>
       <div>
-        <h1 className='text-2xl text-gray-300 uppercase font-bold text-center my-5'>
-          Logo
-        </h1>
-        <BtSidebar name='Institución'/>
-        <BtSidebar name='Facultad'/>
-        <BtSidebar name='Especialidad'/>
-        <BtSidebar name='Usuarios y Roles'/>
+        <User />
+        {button.map((div, index) => (
+          <BtSidebar
+            key={index}
+            isActive={activeDiv === index}
+            onClick={() => setActiveDiv(index)} // Corrección aquí
+            name={div}
+          />
+        ))}
       </div>     
-      <div className='text-center mb-5'>
-        <BtSidebar name='Cerrar Sesión'/>
+      <div className='text-center mb-8'>
+        <BtSidebar name='Cerrar Sesión' />
       </div>
     </div>
   );
